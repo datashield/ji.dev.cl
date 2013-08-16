@@ -1,0 +1,13 @@
+Package: ji.dev.cl
+Maintainer: <datashield@obiba.org>
+Author: <datashield@obiba.org>
+Version: 1.0
+License: GPL-3
+Title: ji.dev.cl
+Description: ji.dev.cl
+Depends:
+    fields,
+    opal,
+    opaladmin
+Collate:
+    'ji.ds.heatmapplot.R'
