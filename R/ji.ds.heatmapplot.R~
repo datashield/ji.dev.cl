@@ -8,11 +8,11 @@
 #' @author Isaeva, J.
 #' @export
 #' 
-ji.ds.heatmapplot <- function(opals, xvect, yvect)
+ag.ds.heatmapplot <- function(opals, xvect, yvect)
 {
   
   # define the min and max of the variables across all datasets
-  cally <- call("ji.MinMax.ds", xvect, yvect) 
+  cally <- call("ag.MinMax.ds", xvect, yvect) 
   MinMax.obj <- datashield.aggregate(opals, cally)
   
   num.sources <- length(MinMax.obj)
@@ -37,7 +37,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect)
 
   
   # generate the grid density object to plot
-  cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
+  cally <- call("ag.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
   grid.density.obj <- datashield.aggregate(opals, cally)
   
   num.sources <- length(grid.density.obj)

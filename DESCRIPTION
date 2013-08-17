@@ -6,8 +6,8 @@ License: GPL-3
 Title: ji.dev.cl
 Description: ji.dev.cl
 Depends:
-    fields,
     opal,
-    opaladmin
+    opaladmin,
+    fields
 Collate:
     'ji.ds.heatmapplot.R'

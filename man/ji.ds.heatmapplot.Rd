@@ -18,4 +18,7 @@
 \description{
   Generates a heatmap plot for merged datasets
 }
+\author{
+  Isaeva, J.
+}
 
