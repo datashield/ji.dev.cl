@@ -4,13 +4,15 @@
 #' the study datasets are stored.
 #' @param xvect a numerical vector
 #' @param yvect a numerical vector
+#' @param type a character which represents the type of graph to display. 
+#' If \code{type} is set to 'combine', a combined heatmap plot displayed and 
+#' if \code{type} is set to 'split', each heatmap is plotted separately.
 #' @return a heatmap plot
-#' @author Isaeva, J.
+#' @author Isaeva, J. and Gaye, A.
 #' @export
 #' 
-ji.ds.heatmapplot <- function(opals, xvect, yvect)
+ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
 {
-  
   # define the min and max of the variables across all datasets
   cally <- call("ji.MinMax.ds", xvect, yvect) 
   MinMax.obj <- datashield.aggregate(opals, cally)
@@ -33,15 +35,12 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect)
   x.global.max = max(x.global.max)
   y.global.min = min(y.global.min)
   y.global.max = max(y.global.max)
-  
-
-  
+    
   # generate the grid density object to plot
   cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
   grid.density.obj <- datashield.aggregate(opals, cally)
   
   num.sources <- length(grid.density.obj)
-  
   numcol<-dim(grid.density.obj[[1]])[2]
   
   Global.grid.density = matrix(0, dim(grid.density.obj[[1]])[1], numcol-2)
@@ -49,13 +48,45 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect)
     Global.grid.density = Global.grid.density + grid.density.obj[[i]][,1:(numcol-2)]
   }
   
+  # labels for the x and y-axis 
+  x.lab <-  strsplit(deparse(xvect), "\\$", perl=TRUE)[[1]][2]
+  y.lab <- strsplit(deparse(yvect), "\\$", perl=TRUE)[[1]][2]
+  
+  # name of the syudies to be used in the plots' titles
+  stdnames <- names(opals)
+  
+  if(type=="combine"){
   par(mfrow=c(1,1))
   
   x<-grid.density.obj[[1]][,(numcol-1)]
   y<-grid.density.obj[[1]][,(numcol)]
   z<-Global.grid.density
   
-  #   library('fields')
-  image.plot(x,y,z, col=heat.colors(50))
+  # plot a combine heatmap
+  image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Poooled Data")
   
+  }else{
+    ll <- length(opals)
+    if(ll > 1){
+      if((ll %% 2) == 0){ numr <- ll/2 }else{ numr <- (ll+1)/2}
+      numc <- 2
+      par(mfrow=c(numr,numc))
+      for(i in 1:ll){
+        grid <- grid.density.obj[[i]][,1:(numcol-2)]
+        x<-grid.density.obj[[i]][,(numcol-1)]
+        y<-grid.density.obj[[i]][,(numcol)]
+        z<-grid 
+        title <- paste("Heatmap Plot of ", stdnames[i], sep="")
+        image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title )
+      }
+    }else{
+      par(mfrow=c(1,1)) 
+      grid <- grid.density.obj[[1]][,1:(numcol-2)]
+      x <- grid.density.obj[[1]][,(numcol-1)]
+      y <- grid.density.obj[[1]][,(numcol)]
+      z <- grid  
+      title <- paste("Heatmap Plot of ", stdnames[1], sep="")
+      image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)   
+    }    
+  }
 }
