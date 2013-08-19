@@ -110,7 +110,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
       if((num.sources %% 2) == 0){ numr <- ll/2 }else{ numr <- (ll+1)/2}
       numc <- 2
       par(mfrow=c(numr,numc))
-      for(i in 1:ll){
+      for(i in 1:num.sources){
         grid <- grid.density.obj[[i]][,1:(numcol-2)]
         x<-grid.density.obj[[i]][,(numcol-1)]
         y<-grid.density.obj[[i]][,(numcol)]
