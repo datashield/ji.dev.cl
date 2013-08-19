@@ -107,7 +107,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     
     
     if(num.sources > 1){
-      if((num.sources %% 2) == 0){ numr <- ll/2 }else{ numr <- (ll+1)/2}
+      if((num.sources %% 2) == 0){ numr <- num.sources/2 }else{ numr <- (num.sources+1)/2}
       numc <- 2
       par(mfrow=c(numr,numc))
       for(i in 1:num.sources){
