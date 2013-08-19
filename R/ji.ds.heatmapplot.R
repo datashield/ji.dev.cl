@@ -68,10 +68,46 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     # plot a combine heatmap
     image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Poooled Data")
     
-  }else{
-    ll <- length(opals)
-    if(ll > 1){
-      if((ll %% 2) == 0){ numr <- ll/2 }else{ numr <- (ll+1)/2}
+  } else if (type='split') {
+    
+    num.sources <- length(opals)
+    
+    # define the min and max of the variables among all the datasets
+    cally <- call("ji.MinMax.ds", xvect, yvect) 
+    MinMax.obj <- datashield.aggregate(opals, cally)
+    
+    # find the global min and max among all datasets
+    x.global.min = NULL
+    x.global.max = NULL
+    y.global.min = NULL
+    y.global.max = NULL
+    
+    for (i in 1:num.sources) {
+      x.global.min = c(x.global.min, MinMax.obj[[i]][1,1])
+      x.global.max = c(x.global.max, MinMax.obj[[i]][2,1])
+      y.global.min = c(y.global.min, MinMax.obj[[i]][1,2])
+      y.global.max = c(y.global.max, MinMax.obj[[i]][2,2])
+    }
+    
+    x.global.min = min(x.global.min)
+    x.global.max = max(x.global.max)
+    y.global.min = min(y.global.min)
+    y.global.max = max(y.global.max)
+    
+    # generate the grid density object to plot
+    cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
+    grid.density.obj <- datashield.aggregate(opals, cally)
+    
+    numcol<-dim(grid.density.obj[[1]])[2]
+    
+#     Global.grid.density = matrix(0, dim(grid.density.obj[[1]])[1], numcol-2)
+#     for (i in 1:num.sources){
+#       Global.grid.density = Global.grid.density + grid.density.obj[[i]][,1:(numcol-2)]
+#     }
+    
+    
+    if(num.sources > 1){
+      if((num.sources %% 2) == 0){ numr <- ll/2 }else{ numr <- (ll+1)/2}
       numc <- 2
       par(mfrow=c(numr,numc))
       for(i in 1:ll){
@@ -91,5 +127,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
       title <- paste("Heatmap Plot of ", stdnames[1], sep="")
       image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)   
     }    
-  }
+  } else
+    stop('Argument "type" has to be either "combine" or "split"')
+  
 }
