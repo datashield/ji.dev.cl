@@ -112,19 +112,25 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     z.global.min = min(z.min)
     z.global.max = max(z.max)
     
+    # splitting screen for plots themselves and for the legend
+    split.screen( rbind(c(0, .8,0,1), c(.8,1,0,1)))
     
     if(num.sources > 1){
       if((num.sources %% 2) == 0){ numr <- num.sources/2 }else{ numr <- (num.sources+1)/2}
       numc <- 2
-      par(mfrow=c(numr,numc))
+      ind = split.screen(c(numr,numc), screen=1) # splitting the current device
+      # par(mfrow=c(numr,numc))
       for(i in 1:num.sources){
+        screen(ind[i])
         grid <- grid.density.obj[[i]][,1:(numcol-2)]
         x<-grid.density.obj[[i]][,(numcol-1)]
         y<-grid.density.obj[[i]][,(numcol)]
         z<-grid 
         title <- paste("Heatmap Plot of ", stdnames[i], sep="")
-        image.plot(x,y,z, xlab=x.lab, ylab=y.lab, zlim=c(z.global.min,z.global.max), main=title )
+        image(x,y,z, xlab=x.lab, ylab=y.lab, zlim=c(z.global.min,z.global.max), main=title, col=tim.colors(64))
       }
+      screen(2)
+      image.plot(legend.only=TRUE, zlim=c(z.global.min,z.global.max), smallplot=c(.1,.2, .2,.8))
     }else{
       par(mfrow=c(1,1)) 
       grid <- grid.density.obj[[1]][,1:(numcol-2)]
