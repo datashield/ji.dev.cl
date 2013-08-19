@@ -100,12 +100,13 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     
     numcol<-dim(grid.density.obj[[1]])[2]
     
-    # find limits for the plot scale
+    # define scale for plot legends
     z.min = NULL
     z.max = NULL
+    
     for (i in 1:num.sources) {
-      z.min = c(z.min, min(grid.density.obj[[i]]))
-      z.max = c(z.max, max(grid.density.obj[[i]]))
+      z.min = c(z.min, min(grid.density.obj[[i]][,1:(numcol-2)]))
+      z.max = c(z.max, max(grid.density.obj[[i]][,1:(numcol-2)]))
     }
     
     z.global.min = min(z.min)
