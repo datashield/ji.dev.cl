@@ -68,7 +68,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     # plot a combine heatmap
     image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Poooled Data")
     
-  } else if (type='split') {
+  } else if (type=='split') {
     
     num.sources <- length(opals)
     
