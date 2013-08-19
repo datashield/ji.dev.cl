@@ -54,36 +54,6 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
   
   if(type=="combine"){
     
-#     # define the min and max of the variables among all the datasets
-#     cally <- call("ji.MinMax.ds", xvect, yvect) 
-#     MinMax.obj <- datashield.aggregate(opals, cally)
-#     
-#     num.sources <- length(MinMax.obj)
-#     
-#     x.global.min = NULL
-#     x.global.max = NULL
-#     y.global.min = NULL
-#     y.global.max = NULL
-#     
-#     for (i in 1:num.sources) {
-#       x.global.min = c(x.global.min, MinMax.obj[[i]][1,1])
-#       x.global.max = c(x.global.max, MinMax.obj[[i]][2,1])
-#       y.global.min = c(y.global.min, MinMax.obj[[i]][1,2])
-#       y.global.max = c(y.global.max, MinMax.obj[[i]][2,2])
-#     }
-#     
-#     x.global.min = min(x.global.min)
-#     x.global.max = max(x.global.max)
-#     y.global.min = min(y.global.min)
-#     y.global.max = max(y.global.max)
-#     
-#     # generate the grid density object to plot
-#     cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
-#     grid.density.obj <- datashield.aggregate(opals, cally)
-    
-#     num.sources <- length(grid.density.obj)
-#     numcol<-dim(grid.density.obj[[1]])[2]
-    
     Global.grid.density = matrix(0, dim(grid.density.obj[[1]])[1], numcol-2)
     for (i in 1:num.sources){
       Global.grid.density = Global.grid.density + grid.density.obj[[i]][,1:(numcol-2)]
@@ -96,40 +66,10 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     y<-grid.density.obj[[1]][,(numcol)]
     z<-Global.grid.density
     
-    # plot a combine heatmap
-    image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Poooled Data")
+    # plot a combined heatmap
+    image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
     
   } else if (type=='split') {
-    
-#     num.sources <- length(opals)
-#     
-#     # define the min and max of the variables among all the datasets
-#     cally <- call("ji.MinMax.ds", xvect, yvect) 
-#     MinMax.obj <- datashield.aggregate(opals, cally)
-#     
-#     # find the global min and max among all datasets
-#     x.global.min = NULL
-#     x.global.max = NULL
-#     y.global.min = NULL
-#     y.global.max = NULL
-#     
-#     for (i in 1:num.sources) {
-#       x.global.min = c(x.global.min, MinMax.obj[[i]][1,1])
-#       x.global.max = c(x.global.max, MinMax.obj[[i]][2,1])
-#       y.global.min = c(y.global.min, MinMax.obj[[i]][1,2])
-#       y.global.max = c(y.global.max, MinMax.obj[[i]][2,2])
-#     }
-#     
-#     x.global.min = min(x.global.min)
-#     x.global.max = max(x.global.max)
-#     y.global.min = min(y.global.min)
-#     y.global.max = max(y.global.max)
-#     
-#     # generate the grid density object to plot
-#     cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
-#     grid.density.obj <- datashield.aggregate(opals, cally)
-#     
-#     numcol<-dim(grid.density.obj[[1]])[2]
     
     # define scale for plot legends
     z.min = NULL
@@ -150,7 +90,6 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
       if((num.sources %% 2) == 0){ numr <- num.sources/2 }else{ numr <- (num.sources+1)/2}
       numc <- 2
       ind = split.screen(c(numr,numc), screen=1) # splitting the current device
-      # par(mfrow=c(numr,numc))
       for(i in 1:num.sources){
         screen(ind[i])
         grid <- grid.density.obj[[i]][,1:(numcol-2)]
@@ -162,6 +101,8 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
       }
       screen(2)
       image.plot(legend.only=TRUE, zlim=c(z.global.min,z.global.max), smallplot=c(.1,.2, .2,.8))
+      close.screen(all=T)
+      
     }else{
       par(mfrow=c(1,1)) 
       grid <- grid.density.obj[[1]][,1:(numcol-2)]
