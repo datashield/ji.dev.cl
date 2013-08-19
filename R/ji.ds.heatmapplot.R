@@ -18,7 +18,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
   x.lab <-  strsplit(deparse(xvect), "\\$", perl=TRUE)[[1]][2]
   y.lab <- strsplit(deparse(yvect), "\\$", perl=TRUE)[[1]][2]
   
-  # name of the syudies to be used in the plots' titles
+  # name of the studies to be used in the plots' titles
   stdnames <- names(opals)
   
   if(type=="combine"){
@@ -100,10 +100,16 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
     
     numcol<-dim(grid.density.obj[[1]])[2]
     
-#     Global.grid.density = matrix(0, dim(grid.density.obj[[1]])[1], numcol-2)
-#     for (i in 1:num.sources){
-#       Global.grid.density = Global.grid.density + grid.density.obj[[i]][,1:(numcol-2)]
-#     }
+    # find limits for the plot scale
+    z.min = NULL
+    z.max = NULL
+    for (i in 1:num.sources) {
+      z.min = c(z.min, min(grid.density.obj[[i]]))
+      z.max = c(z.max, max(grid.density.obj[[i]]))
+    }
+    
+    z.global.min = min(z.min)
+    z.global.max = max(z.max)
     
     
     if(num.sources > 1){
@@ -116,7 +122,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
         y<-grid.density.obj[[i]][,(numcol)]
         z<-grid 
         title <- paste("Heatmap Plot of ", stdnames[i], sep="")
-        image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title )
+        image.plot(x,y,z, xlab=x.lab, ylab=y.lab, zlim=c(z.global.min,z.global.max), main=title )
       }
     }else{
       par(mfrow=c(1,1)) 
@@ -125,9 +131,9 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
       y <- grid.density.obj[[1]][,(numcol)]
       z <- grid  
       title <- paste("Heatmap Plot of ", stdnames[1], sep="")
-      image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)   
+      image.plot(x,y,z, xlab=x.lab, ylab=y.lab, zlim=c(z.global.min,z.global.max), main=title)   
     }    
   } else
-    stop('Argument "type" has to be either "combine" or "split"')
+    stop('Function argument "type" has to be either "combine" or "split"')
   
 }
