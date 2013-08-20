@@ -53,6 +53,12 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
   
   numcol<-dim(grid.density.obj[[1]])[2]
   
+  # print the number of invalid cells in each participating study
+  for (i in 1:num.sources) {
+    cat('\n',stdnames[i],': ', names(dimnames(grid.density.obj[[i]])[2]), '\n')
+  }
+  
+  
   if(type=="combine"){
     
     Global.grid.density = matrix(0, dim(grid.density.obj[[1]])[1], numcol-2)
