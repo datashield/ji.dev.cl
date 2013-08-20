@@ -7,11 +7,12 @@
 #' @param type a character which represents the type of graph to display. 
 #' If \code{type} is set to 'combine', a combined heatmap plot displayed and 
 #' if \code{type} is set to 'split', each heatmap is plotted separately.
+#' @param numints a number of intervals for a density grid object
 #' @return a heatmap plot
 #' @author Isaeva, J. and Gaye, A.
 #' @export
 #' 
-ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
+ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
 {
   
   # labels for the x and y-axis 
@@ -47,7 +48,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine")
   y.global.max = max(y.global.max)
   
   # generate the grid density object to plot
-  cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max) 
+  cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
   grid.density.obj <- datashield.aggregate(opals, cally)
   
   numcol<-dim(grid.density.obj[[1]])[2]
