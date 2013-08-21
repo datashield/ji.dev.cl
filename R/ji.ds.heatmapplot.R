@@ -28,8 +28,6 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
   cally <- call("ji.MinMax.ds", xvect, yvect) 
   MinMax.obj <- datashield.aggregate(opals, cally)
   
-  num.sources <- length(MinMax.obj)
-  
   x.global.min = NULL
   x.global.max = NULL
   y.global.min = NULL
