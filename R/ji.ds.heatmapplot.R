@@ -46,7 +46,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
   y.global.max = max(y.global.max)
   
   # generate the grid density object to plot
-  cally <- call("ji.griddensitylim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
+  cally <- call("ji.densitygridlim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
   grid.density.obj <- datashield.aggregate(opals, cally)
   
   numcol<-dim(grid.density.obj[[1]])[2]
