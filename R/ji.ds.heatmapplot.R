@@ -16,7 +16,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
 {
   
   # labels for the x and y-axis 
-  x.lab <-  strsplit(deparse(xvect), "\\$", perl=TRUE)[[1]][2]
+  x.lab <- strsplit(deparse(xvect), "\\$", perl=TRUE)[[1]][2]
   y.lab <- strsplit(deparse(yvect), "\\$", perl=TRUE)[[1]][2]
   
   # name of the studies to be used in the plots' titles
@@ -46,7 +46,7 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
   y.global.max = max(y.global.max)
   
   # generate the grid density object to plot
-  cally <- call("ji.densitygridlim.ds", xvect, yvect, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
+  cally <- call("ji.densitygrid.ds", xvect, yvect, limits=T, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
   grid.density.obj <- datashield.aggregate(opals, cally)
   
   numcol<-dim(grid.density.obj[[1]])[2]
