@@ -28,6 +28,6 @@
   Generates a contour plot of the given data values.
 }
 \author{
-  Burton, P.
+  Burton, P., Isaeva, J. and Gaye, A.
 }
 
