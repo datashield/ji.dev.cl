@@ -2,7 +2,8 @@
 \alias{ji.ds.heatmapplot}
 \title{Generates a heatmap plot for merged datasets}
 \usage{
-  ji.ds.heatmapplot(opals, xvect, yvect, type = "combine")
+  ji.ds.heatmapplot(opals, xvect, yvect, type = "combine",
+    numints = 20)
 }
 \arguments{
   \item{opals}{character strings that represent the URL of
@@ -16,6 +17,9 @@
   graph to display. If \code{type} is set to 'combine', a
   combined heatmap plot displayed and if \code{type} is set
   to 'split', each heatmap is plotted separately.}
+
+  \item{numints}{a number of intervals for a density grid
+  object}
 }
 \value{
   a heatmap plot
