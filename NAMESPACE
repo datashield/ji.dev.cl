@@ -1,1 +1,2 @@
+export(ji.ds.contourplot)
 export(ji.ds.heatmapplot)

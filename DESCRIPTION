@@ -11,3 +11,4 @@ Depends:
     fields
 Collate:
     'ji.ds.heatmapplot.R'
+    'ji.ds.contourplot.R'

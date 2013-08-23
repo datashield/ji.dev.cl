@@ -30,3 +30,17 @@ ji.ds.heatmapplot(opals[2], quote(D$LAB_TSC), quote(D$LAB_HDL), type="split")
 
 # GENERATE A SPLIT HEATMAP PLOT WITH LESS DENSE GRID
 ji.ds.heatmapplot(opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="split", numints=15)
+
+
+# GENERATE A COMBINED CONTOUR PLOT ACROSS THE STUDIES USING THE TWO VARIABLES BELOW
+ji.ds.contourplot(opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="combine")
+
+# GENERATE A SPLIT CONTOUR PLOT WHERE EACH STUDY IS PLOTTED SEPARATELY
+# THIS WAY THE USER HAS NOW MORE FLEXIBILITY
+ji.ds.contourplot(opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="split")
+
+# GENERATE A CONTOUR PLOT A SPECIFIC STUDY, HERE THE 2ND STUDY ONLY IS PLOTTED 
+ji.ds.contourplot(opals[2], quote(D$LAB_TSC), quote(D$LAB_HDL), type="split")
+
+# GENERATE A SPLIT CONTOUR PLOT WITH LESS DENSE GRID
+ji.ds.contourplot(opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="split", numints=15)
