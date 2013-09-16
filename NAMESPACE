@@ -1,2 +1,3 @@
 export(ji.ds.contourplot)
 export(ji.ds.heatmapplot)
+export(ji.ds.mean)
