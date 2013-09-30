@@ -13,3 +13,4 @@ Collate:
     'ji.ds.heatmapplot.R'
     'ji.ds.contourplot.R'
     'ji.ds.mean.R'
+    'ji.ds.t.test.formula.R'
