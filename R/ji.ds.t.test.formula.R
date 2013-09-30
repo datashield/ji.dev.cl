@@ -40,17 +40,17 @@
 #' data(logindata)
 #' 
 #' # login and assign specific variable(s)
-#' myvar <- list("LAB_HDL", "LAB_TSC")
+#' myvar <- list("LAB_TSC", "GENDER")
 #' opals <- ds.login(logins=logindata,assign=TRUE,variables=myvar)
 #' 
 #' # Example 1: Run a t.test of the pooled data for the variables 'LAB_HDL' and 'LAB_TSC' - default
-#' ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC))
+#' ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
 #' 
 #' # Example 2: Run a t.test for each study separately for the same variables as above
 #' ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
 #'}
 #'
-ji.ds.t.test.formula <- function (opals, formula, data, subset, na.action, type="combine", alternative = "two.sided", mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95) {
+ji.ds.t.test.formula <- function (opals, formula, data=NULL, subset, na.action, type="combine", alternative = "two.sided", mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95) {
   
   # check whether the formula is correctly defined
   if (missing(formula) || (length(formula) != 3L) || (length(attr(terms(formula[-2L]), 
@@ -65,8 +65,8 @@ ji.ds.t.test.formula <- function (opals, formula, data, subset, na.action, type=
   
   # ************************************************************* dont know yet how to do it here
   # call the function that checks the variables are available and not empty
-  vars2check <- list(x,y)
-  opals <- ds.checkvar(opals, vars2check)
+#   vars2check <- list(x,y)
+#   opals <- ds.checkvar(opals, vars2check)
   
   # number of studies
   num.sources = length(opals)

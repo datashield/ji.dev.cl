@@ -86,11 +86,11 @@
 data(logindata)
 
 # login and assign specific variable(s)
-myvar <- list("LAB_HDL", "LAB_TSC")
+myvar <- list("LAB_TSC", "GENDER")
 opals <- ds.login(logins=logindata,assign=TRUE,variables=myvar)
 
 # Example 1: Run a t.test of the pooled data for the variables 'LAB_HDL' and 'LAB_TSC' - default
-ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC))
+ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
 
 # Example 2: Run a t.test for each study separately for the same variables as above
 ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
