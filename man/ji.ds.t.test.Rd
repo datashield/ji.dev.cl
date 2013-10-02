@@ -1,32 +1,21 @@
-\name{ji.ds.t.test.formula}
-\alias{ji.ds.t.test.formula}
-\title{Runs a student's t-test on horizontally partitioned data (formula method)}
+\name{ji.ds.t.test}
+\alias{ji.ds.t.test}
+\title{Runs a student's t-test on horizontally partitioned data}
 \usage{
-  ji.ds.t.test.formula(opals, formula, data = NULL,
-    subset = NULL, na.action = getOption("na.action"),
-    type = "combine", alternative = "two.sided", mu = 0,
-    paired = FALSE, var.equal = FALSE, conf.level = 0.95)
+  ji.ds.t.test(datasources, x, y = NULL, type = "combine",
+    alternative = "two.sided", mu = 0, paired = FALSE,
+    var.equal = FALSE, conf.level = 0.95)
 }
 \arguments{
-  \item{opals}{a list of opal object(s) obtained after
-  login in to opal servers; these objects hold also the
-  data assign to R, as \code{dataframe}, from opal
+  \item{datasources}{a list of opal object(s) obtained
+  after login in to opal servers; these objects hold also
+  the data assign to R, as \code{dataframe}, from opal
   datasources.}
 
-  \item{formula}{a formula of the form y ~ x where y is a
-  numeric variable giving the data values and x a factor
-  with two levels giving the corresponding groups.}
+  \item{x}{a (non-empty) numeric vector of data values}
 
-  \item{data}{an optional matrix or data frame containing
-  the variables in the formula formula. By default the
-  variables are taken from environment(formula)}
-
-  \item{subset}{an optional vector specifying a subset of
-  observations to be used.}
-
-  \item{na.action}{a function which indicates what should
-  happen when the data contain NAs. Defaults to
-  getOption("na.action")}
+  \item{y}{an optional (non-empty) numeric vector of data
+  values.}
 
   \item{type}{a character which tells if the test is ran
   for the pooled data or not. By default \code{type} is set
@@ -72,7 +61,7 @@
   performed
 }
 \description{
-  Performs two sample t-tests on vectors of data.
+  Performs one and two sample t-tests on vectors of data.
 }
 \details{
   Summary statistics are obtained from each of the data
@@ -81,19 +70,19 @@
   are used for performing t-test.
 }
 \examples{
-\dontrun{
+{
 # load that contains the login details
 data(logindata)
 
 # login and assign specific variable(s)
-myvar <- list("LAB_TSC", "GENDER")
+myvar <- list("LAB_HDL", "LAB_TSC")
 opals <- ds.login(logins=logindata,assign=TRUE,variables=myvar)
 
 # Example 1: Run a t.test of the pooled data for the variables 'LAB_HDL' and 'LAB_TSC' - default
-ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
+ds.t.test(datasources=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC))
 
 # Example 2: Run a t.test for each study separately for the same variables as above
-ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
+ds.t.test(datasources=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
 }
 }
 \author{

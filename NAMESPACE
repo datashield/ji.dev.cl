@@ -1,4 +1,5 @@
 export(ji.ds.contourplot)
 export(ji.ds.heatmapplot)
 export(ji.ds.mean)
+export(ji.ds.t.test)
 export(ji.ds.t.test.formula)

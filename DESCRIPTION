@@ -14,3 +14,4 @@ Collate:
     'ji.ds.contourplot.R'
     'ji.ds.mean.R'
     'ji.ds.t.test.formula.R'
+    'ji.ds.t.test.R'
