@@ -57,12 +57,17 @@ ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative 
     var1 <- strsplit(deparse(x), "\\$", perl=TRUE)[[1]][2]
     var2 <- strsplit(deparse(y), "\\$", perl=TRUE)[[1]][2]
     variables <- c(var1, var2)
-    dname = paste(var1, 'and', 'var2')
+    dname = paste(var1, 'and', var2)
   }
   
   # call the function that checks the variables are available and not empty
-  vars2check <- list(x,y)
-  datasources <- ds.checkvar(datasources, vars2check)
+  if (is.null(y)) {
+    vars2check <- list(x)
+    datasources <- ds.checkvar(datasources, vars2check)
+  } else {
+    vars2check <- list(x,y)
+    datasources <- ds.checkvar(datasources, vars2check)
+  }
   
   # number of studies
   num.sources = length(datasources)
