@@ -99,21 +99,22 @@ ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative 
         datashield.assign(datasources, 'yok', cally)
       }
     } else {
-      # dname <- deparse(substitute(x))
       if (paired) 
         stop("'y' is missing for paired test")
       cally = call('complete.cases', x)
       datashield.assign(datasources, 'not.na.x', cally)
       cally = call('subset', x, quote(not.na.x))
       datashield.assign(datasources, 'xok', cally)
+      datashield.assign(datasources, 'yok', as.null(y))
+      
     }
     
     
     if (paired) {
       cally = call('product.ds', quote(yok), quote(-1))
       datashield.assign(datasources, 'minus_y', cally)
-      datashield.assign(datasources, 'dummy', quote(cbind(xok, minus_y)))
-      datashield.assign(datasources, 'xok', quote(rowSums(dummy)))
+      # datashield.assign(datasources, 'dummy', quote(cbind(xok, minus_y)))
+      datashield.assign(datasources, 'xok', quote(xok+minus_y))
       datashield.assign(datasources, 'yok', quote(as.null(yok)))
     }
     
