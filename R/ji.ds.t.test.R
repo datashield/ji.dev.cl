@@ -41,10 +41,10 @@
 #' opals <- ds.login(logins=logindata,assign=TRUE,variables=myvar)
 #' 
 #' # Example 1: Run a t.test of the pooled data for the variables 'LAB_HDL' and 'LAB_TSC' - default
-#' ds.t.test(datasources=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC))
+#' ji.ds.t.test(datasources=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC))
 #' 
 #' # Example 2: Run a t.test for each study separately for the same variables as above
-#' ds.t.test(datasources=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
+#' ji.ds.t.test(datasources=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
 #'}
 #'
 ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative = "two.sided", mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95) {
