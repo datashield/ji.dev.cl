@@ -128,8 +128,7 @@ ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative 
       datashield.assign(datasources, 'not.na.x', cally)
       cally = call('subset', x, quote(not.na.x))
       datashield.assign(datasources, 'xok', cally)
-      datashield.assign(datasources, 'yok', quote(as.null(y)))
-      
+      datashield.assign(datasources, 'yok', quote(as.null(x))) # does not matter that as.null(x) since we just want to make y to be NULL
     }
     
     
