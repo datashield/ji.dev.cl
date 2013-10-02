@@ -105,7 +105,8 @@ ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative 
     if (paired) {
       cally = call('product.ds', quote(yok), quote(-1))
       datashield.assign(datasources, 'minus_y', cally)
-      datashield.assign(datasources, 'xok', quote(sum(xok, minus_y)))
+      datashield.assign(datasources, 'dummy', quote(cbind(xok, minus_y)))
+      datashield.assign(datasources, 'xok', quote(rowSums(dummy)))
       datashield.assign(datasources, 'yok', quote(as.null(yok)))
     }
     
