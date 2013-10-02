@@ -52,10 +52,12 @@ ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative 
   # get the names of the variables used for the analysis
   if(is.null(y)){
     variables <-  strsplit(deparse(x), "\\$", perl=TRUE)[[1]][2]
+    dname = variables
   }else{
     var1 <- strsplit(deparse(x), "\\$", perl=TRUE)[[1]][2]
     var2 <- strsplit(deparse(y), "\\$", perl=TRUE)[[1]][2]
     variables <- c(var1, var2)
+    dname = paste(var1, 'and', 'var2')
   }
   
   # call the function that checks the variables are available and not empty
@@ -253,7 +255,7 @@ ji.ds.t.test <- function (datasources, x, y = NULL, type="combine", alternative 
     attr(cint, "conf.level") <- conf.level
     rval <- list(statistic = tstat, parameter = df, p.value = pval, 
                  conf.int = cint, estimate = estimate, null.value = mu, 
-                 alternative = alternative, method = method)
+                 alternative = alternative, method = method, data.name=dname)
     class(rval) <- "htest"
     
     # delete files that are no more required
