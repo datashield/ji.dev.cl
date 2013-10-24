@@ -51,8 +51,8 @@ ji.ds.range = function(datasources=NULL, xvect=NULL, type='combine'){
   ranges <- datashield.aggregate(datasources, cally)
   
   if(type=="combine"){
-    global.min = lapply(ranges, function(x) x[1])
-    global.max = lapply(ranges, function(x) x[2])
+    global.min = min(lapply(ranges, function(x) x[1]))
+    global.max = max(lapply(ranges, function(x) x[2]))
     global.range = c(global.min, global.max)
     return(global.range)
   }else{
