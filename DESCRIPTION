@@ -18,3 +18,4 @@ Collate:
     'ji.ds.colnames.R'
     'ji.ds.dim.R'
     'ji.ds.range.R'
+    'ji.ds.is.numeric.R'
