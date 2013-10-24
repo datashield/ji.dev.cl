@@ -16,3 +16,4 @@ Collate:
     'ji.ds.t.test.formula.R'
     'ji.ds.t.test.R'
     'ji.ds.colnames.R'
+    'ji.ds.dim.R'
