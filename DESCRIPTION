@@ -17,3 +17,4 @@ Collate:
     'ji.ds.t.test.R'
     'ji.ds.colnames.R'
     'ji.ds.dim.R'
+    'ji.ds.range.R'
