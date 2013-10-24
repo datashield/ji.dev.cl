@@ -14,7 +14,7 @@
   frame}
 }
 \value{
-  for an array, NULL or a vector of mode \{integer}
+  for an array, NULL or a vector of mode \code{integer}
 }
 \description{
   this function is similar to R function \code{dim}
