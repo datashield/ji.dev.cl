@@ -18,8 +18,8 @@
 #' # Example 1: Get the column names of the assigned datasets
 #' ji.ds.colnames(datasources=opals, x=quote(D))
 #' 
-#' # Example 2: Get the number of observations on each study, for the variable 'LAB_TSC'
-#' ds.length(datasources=opals, xvect=quote(D$LAB_TSC), type="split")
+#' # Example 2: Vectors are wrong input to the colnames function
+#' ji.ds.colnames(datasources=opals, x=quote(D$LAB_TSC))
 #' }
 #' 
 ji.ds.colnames = function(datasources=NULL, x=NULL) {
