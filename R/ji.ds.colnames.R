@@ -36,11 +36,15 @@ ji.ds.colnames = function(datasources=NULL, x=NULL) {
     stop(" End of process!\n\n", call.=FALSE)
   }
   
-  if ( (!is.matrix(x)) && (!is.data.frame(x)) ){
-    message("\n\n ALERT!\n")
-    message(" 2. Please provide a valid matrix-like object\n")
-    stop(" End of process!\n\n", call.=FALSE)
+  num.sources=length(datasources)
+  for (i in 1:num.sources) {
+    if ( (!is.matrix(x)) && (!is.data.frame(x)) ){
+      message("\n\n ALERT!\n")
+      message(" Please provide a valid matrix-like object for study ',i, '\n")
+      stop(" End of process!\n\n", call.=FALSE)
+    }
   }
+  
   
   cally <- call('colnames', x )
   column_names <- datashield.aggregate(datasources, cally)
