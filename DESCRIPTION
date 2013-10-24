@@ -21,3 +21,5 @@ Collate:
     'ji.ds.is.numeric.R'
     'ji.ds.is.character.R'
     'ji.ds.is.factor.R'
+    'ji.ds.is.null.R'
+    'ji.ds.NROW.R'
