@@ -25,3 +25,4 @@ Collate:
     'ji.ds.NROW.R'
     'ji.ds.class.R'
     'ji.ds.levels.R'
+    'ji.ds.is.list.R'
