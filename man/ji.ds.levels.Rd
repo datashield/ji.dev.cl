@@ -1,0 +1,40 @@
+\name{ji.ds.levels}
+\alias{ji.ds.levels}
+\title{Provides access to the levels attribute of a variable}
+\usage{
+  ji.ds.levels(datasources = NULL, xvect = NULL)
+}
+\arguments{
+  \item{datasources}{a list of opal object(s) obtained
+  after login in to opal servers; these objects hold also
+  the data assign to R, as \code{dataframe}, from opal
+  datasources.}
+
+  \item{xvect}{an R object (factor)}
+}
+\value{
+  levels of xvect
+}
+\description{
+  this function is similar to R function \code{levels}
+}
+\examples{
+{
+
+# load that contains the login details
+data(logindata)
+
+# login
+opals <- datashield.login(logins=logindata,assign=TRUE)
+
+# Example 1: Get the levels of the PM_BMI_CONTINUOUS variable
+ji.ds.levels(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
+
+# Example 2: Get the levels of the LAB_TSC
+ji.ds.levels(datasources=opals, xvect=quote(D$LAB_TSC))
+}
+}
+\author{
+  Isaeva, J. (julia.isaeva
+}
+
