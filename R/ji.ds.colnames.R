@@ -5,7 +5,7 @@
 #' these objects hold also the data assign to R, as \code{dataframe}, from opal datasources.
 #' @param x a matrix-like object
 #' @return a string containing column names of the given object
-#' @author Isaeva, J. (julia.isaeva@fhi.no)
+#' @author Gaye, A. (amadou.gaye@bristol.ac.uk) and Isaeva, J. (julia.isaeva@fhi.no)
 #' @export
 #' @examples {
 #' 
@@ -36,7 +36,6 @@ ji.ds.colnames = function(datasources=NULL, x=NULL) {
     stop(" End of process!\n\n", call.=FALSE)
   }
   
-# <<<<<<< HEAD
 # #   num.sources=length(datasources)
 # #   for (i in 1:num.sources) {
 # #     if ( (!is.matrix(x)) && (!is.data.frame(x)) ){
@@ -46,13 +45,13 @@ ji.ds.colnames = function(datasources=NULL, x=NULL) {
 # #     }
 # #   }
 #   
-# =======
+# 
 #   if ( (!is.matrix(x)) && (!is.data.frame(x)) ){
 #     message("\n\n ALERT!\n")
 #     message(" Please provide a valid matrix-like object\n")
 #     stop(" End of process!\n\n", call.=FALSE)
 #   }
-# >>>>>>> 914b60dd2d20457684b6a59398ac3ebd5c5a996a
+# 
   
   cally <- call('colnames', x )
   column_names <- datashield.aggregate(datasources, cally)
