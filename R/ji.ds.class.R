@@ -32,7 +32,7 @@ ji.ds.class = function(datasources=NULL, x=NULL) {
   
   if(is.null(x)){
     message("\n\n ALERT!\n")
-    message(" Please provide a valid matrix-like object\n")
+    message(" Please provide a valid object\n")
     stop(" End of process!\n\n", call.=FALSE)
   }
   

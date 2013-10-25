@@ -1,10 +1,10 @@
 #' 
-#' @title a test of an object being of type "factor"
-#' @description this function is similar to R function \code{is.factor}
+#' @title tests whether an object is NULL
+#' @description this function is similar to R function \code{is.null}
 #' @param datasources a list of opal object(s) obtained after login in to opal servers;
 #' these objects hold also the data assign to R, as \code{dataframe}, from opal datasources.
 #' @param xvect a vector to be tested
-#' @return a logic value (TRUE if xvect is numeric)
+#' @return a logic value (TRUE if xvect is null and FALSE otherwise)
 #' @author Isaeva, J. (julia.isaeva@fhi.no)
 #' @export
 #' @examples {
@@ -15,14 +15,12 @@
 #' # login
 #' opals <- datashield.login(logins=logindata,assign=TRUE)
 #' 
-#' # Example 1: Test whether LAB_TSC variable is of type "factor"
-#' ji.ds.is.factor(datasources=opals, xvect=quote(D$LAB_TSC))
+#' # Example 1: Test whether LAB_TSC variable is NULL
+#' ji.ds.is.null(datasources=opals, xvect=quote(D$LAB_TSC))
 #' 
-#' # Example 2: Test whether PM_BMI_CONTINUOUS variable is of type "factor"
-#' ji.ds.is.factor(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
 #' }
 #' 
-ji.ds.is.factor = function(datasources=NULL, xvect=NULL) {
+ji.ds.is.null = function(datasources=NULL, xvect=NULL) {
   if(is.null(datasources)){
     message("\n\n ALERT!\n")
     message(" No valid opal object(s) provided.\n")
@@ -32,7 +30,7 @@ ji.ds.is.factor = function(datasources=NULL, xvect=NULL) {
   
   if(is.null(xvect)){
     message("\n\n ALERT!\n")
-    message(" Please provide a valid matrix-like object\n")
+    message(" Please provide a valid input\n")
     stop(" End of process!\n\n", call.=FALSE)
   }
   
@@ -40,8 +38,8 @@ ji.ds.is.factor = function(datasources=NULL, xvect=NULL) {
   vars2check <- list(xvect)
   datasources <- ds.checkvar(datasources, vars2check)
   
-  cally <- call('is.factor', xvect )
-  factor_tests <- datashield.aggregate(datasources, cally)
+  cally <- call('is.null', xvect )
+  null_tests <- datashield.aggregate(datasources, cally)
   
-  return(factor_tests)
+  return(null_tests)
 }

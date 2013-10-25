@@ -16,7 +16,7 @@
 #' opals <- datashield.login(logins=logindata,assign=TRUE)
 #' 
 #' # Example 1: Test whether LAB_TSC variable is of type "character"
-#' ji.ds.is.character(datasources=opals, x=quote(D$LAB_TSC))
+#' ji.ds.is.character(datasources=opals, xvect=quote(D$LAB_TSC))
 #' 
 #' }
 #' 
@@ -30,7 +30,7 @@ ji.ds.is.character = function(datasources=NULL, xvect=NULL) {
   
   if(is.null(xvect)){
     message("\n\n ALERT!\n")
-    message(" Please provide a valid matrix-like object\n")
+    message(" Please provide a valid input\n")
     stop(" End of process!\n\n", call.=FALSE)
   }
   
@@ -38,7 +38,7 @@ ji.ds.is.character = function(datasources=NULL, xvect=NULL) {
   vars2check <- list(xvect)
   datasources <- ds.checkvar(datasources, vars2check)
   
-  cally <- call('is.character', x )
+  cally <- call('is.character', xvect )
   character_tests <- datashield.aggregate(datasources, cally)
   
   return(character_tests)

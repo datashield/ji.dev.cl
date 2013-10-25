@@ -41,15 +41,15 @@ ji.ds.NROW = function(datasources=NULL, x=NULL, type='combine'){
   
   if(is.null(x)){
     message("\n\n ALERT!\n")
-    message(" Please provide a valid numeric vector\n")
+    message(" Please provide a valid object\n")
     stop(" End of process!\n\n", call.=FALSE)
   }
   
   # call the function that checks the variable is available and not empty
-  vars2check <- list(xvect)
+  vars2check <- list(x)
   datasources <- ds.checkvar(datasources, vars2check)
   
-  cally <- call('NROW', xvect )
+  cally <- call('NROW', x )
   numrows <- datashield.aggregate(datasources, cally)
   
   if(type=="combine"){

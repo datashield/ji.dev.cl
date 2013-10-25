@@ -40,7 +40,7 @@ ji.ds.is.numeric = function(datasources=NULL, xvect=NULL) {
   vars2check <- list(xvect)
   datasources <- ds.checkvar(datasources, vars2check)
   
-  cally <- call('is.numeric', x )
+  cally <- call('is.numeric', xvect )
   numeric_tests <- datashield.aggregate(datasources, cally)
   
   return(numeric_tests)

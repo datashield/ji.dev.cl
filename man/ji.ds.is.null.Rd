@@ -1,8 +1,8 @@
-\name{ji.ds.is.character}
-\alias{ji.ds.is.character}
-\title{a test of an object being of type 'character'}
+\name{ji.ds.is.null}
+\alias{ji.ds.is.null}
+\title{tests whether an object is NULL}
 \usage{
-  ji.ds.is.character(datasources = NULL, xvect = NULL)
+  ji.ds.is.null(datasources = NULL, xvect = NULL)
 }
 \arguments{
   \item{datasources}{a list of opal object(s) obtained
@@ -13,11 +13,10 @@
   \item{xvect}{a vector to be tested}
 }
 \value{
-  a logic value (TRUE if xvect is of type "character")
+  a logic value (TRUE if xvect is null and FALSE otherwise)
 }
 \description{
-  this function is similar to R function
-  \code{is.character}
+  this function is similar to R function \code{is.null}
 }
 \examples{
 {
@@ -28,8 +27,8 @@ data(logindata)
 # login
 opals <- datashield.login(logins=logindata,assign=TRUE)
 
-# Example 1: Test whether LAB_TSC variable is of type "character"
-ji.ds.is.character(datasources=opals, xvect=quote(D$LAB_TSC))
+# Example 1: Test whether LAB_TSC variable is NULL
+ji.ds.is.null(datasources=opals, xvect=quote(D$LAB_TSC))
 
 }
 }

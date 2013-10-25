@@ -16,7 +16,7 @@
   a logic value (TRUE if xvect is numeric)
 }
 \description{
-  this function is similar to R function \code{is.numeric}
+  this function is similar to R function \code{is.factor}
 }
 \examples{
 {
@@ -28,10 +28,10 @@ data(logindata)
 opals <- datashield.login(logins=logindata,assign=TRUE)
 
 # Example 1: Test whether LAB_TSC variable is of type "factor"
-ji.ds.is.factor(datasources=opals, x=quote(D$LAB_TSC))
+ji.ds.is.factor(datasources=opals, xvect=quote(D$LAB_TSC))
 
 # Example 2: Test whether PM_BMI_CONTINUOUS variable is of type "factor"
-ji.ds.is.factor(datasources=opals, x=quote(D$PM_BMI_CONTINUOUS))
+ji.ds.is.factor(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
 }
 }
 \author{
