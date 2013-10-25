@@ -28,10 +28,10 @@ data(logindata)
 opals <- datashield.login(logins=logindata,assign=TRUE)
 
 # Example 1: Test whether LAB_TSC variable is numeric
-ji.ds.is.numeric(datasources=opals, x=quote(D$LAB_TSC))
+ji.ds.is.numeric(datasources=opals, xvect=quote(D$LAB_TSC))
 
 # Example 2: Test whether GENDER variable is numeric
-ji.ds.is.numeric(datasources=opals, x=quote(D$GENDER))
+ji.ds.is.numeric(datasources=opals, xvect=quote(D$GENDER))
 }
 }
 \author{

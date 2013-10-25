@@ -16,10 +16,10 @@
 #' opals <- datashield.login(logins=logindata,assign=TRUE)
 #' 
 #' # Example 1: Test whether LAB_TSC variable is numeric
-#' ji.ds.is.numeric(datasources=opals, x=quote(D$LAB_TSC))
+#' ji.ds.is.numeric(datasources=opals, xvect=quote(D$LAB_TSC))
 #' 
 #' # Example 2: Test whether GENDER variable is numeric
-#' ji.ds.is.numeric(datasources=opals, x=quote(D$GENDER))
+#' ji.ds.is.numeric(datasources=opals, xvect=quote(D$GENDER))
 #' }
 #' 
 ji.ds.is.numeric = function(datasources=NULL, xvect=NULL) {
@@ -32,7 +32,7 @@ ji.ds.is.numeric = function(datasources=NULL, xvect=NULL) {
   
   if(is.null(xvect)){
     message("\n\n ALERT!\n")
-    message(" Please provide a valid matrix-like object\n")
+    message(" Please provide a valid vector\n")
     stop(" End of process!\n\n", call.=FALSE)
   }
   
