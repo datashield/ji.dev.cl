@@ -36,14 +36,20 @@ ji.ds.colnames = function(datasources=NULL, x=NULL) {
     stop(" End of process!\n\n", call.=FALSE)
   }
   
-# #   num.sources=length(datasources)
-# #   for (i in 1:num.sources) {
-# #     if ( (!is.matrix(x)) && (!is.data.frame(x)) ){
-# #       message("\n\n ALERT!\n")
-# #       message(" Please provide a valid matrix-like object for study ",i, "\n")
-# #       stop(" End of process!\n\n", call.=FALSE)
-# #     }
-# #   }
+  # check whether a given vector is a factor type
+  numsources = length(datasources)
+  cally = call('class', x)
+  classes_x = datashield.aggregate(datasources, cally)
+  flag = 0  
+  for (i in 1:num.sources) {
+    if ( (classes_x[[i]]!='matrix') && (classes_x[[i]]!='data.frame') ){
+      message("\n\n ALERT!\n")
+      message(" Please provide a valid matrix-like object for study ",i, "\n")
+      flag=1
+    }
+    if (flag==1)
+      stop(" End of process!\n\n", call.=FALSE)
+  }
 #   
 # 
 #   if ( (!is.matrix(x)) && (!is.data.frame(x)) ){
