@@ -34,3 +34,4 @@ Collate:
     'ji.ds.asMatrix.R'
     'ji.ds.asNull.R'
     'ji.ds.complete.cases.R'
+    'ji.ds.isNA.R'
