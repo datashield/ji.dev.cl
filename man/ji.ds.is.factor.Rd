@@ -30,8 +30,8 @@ opals <- datashield.login(logins=logindata,assign=TRUE)
 # Example 1: Test whether LAB_TSC variable is of type "factor"
 ji.ds.is.factor(datasources=opals, xvect=quote(D$LAB_TSC))
 
-# Example 2: Test whether PM_BMI_CONTINUOUS variable is of type "factor"
-ji.ds.is.factor(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
+# Example 2: Test whether PM_BMI_CATEGORICAL variable is of type "factor"
+ji.ds.is.factor(datasources=opals, xvect=quote(D$PM_BMI_CATEGORICAL))
 }
 }
 \author{

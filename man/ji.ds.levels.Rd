@@ -27,14 +27,14 @@ data(logindata)
 # login
 opals <- datashield.login(logins=logindata,assign=TRUE)
 
-# Example 1: Get the levels of the PM_BMI_CONTINUOUS variable
-ji.ds.levels(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
+# Example 1: Get the levels of the PM_BMI_CATEGORICAL variable
+ji.ds.levels(datasources=opals, xvect=quote(D$PM_BMI_CATEGORICAL))
 
-# Example 2: Get the levels of the LAB_TSC
+# Example 2: Get the levels of the LAB_TSC   SHOULD NOT WORK AS IT IS A CONTINUOUS VARIABLE
 ji.ds.levels(datasources=opals, xvect=quote(D$LAB_TSC))
 }
 }
 \author{
-  Isaeva, J. (julia.isaeva
+  Gaye, A. (amadou.gaye
 }
 

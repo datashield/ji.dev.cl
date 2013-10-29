@@ -35,6 +35,6 @@ ji.ds.is.numeric(datasources=opals, xvect=quote(D$GENDER))
 }
 }
 \author{
-  Isaeva, J. (julia.isaeva
+  Gaye, A. (amadou.gaye
 }
 
