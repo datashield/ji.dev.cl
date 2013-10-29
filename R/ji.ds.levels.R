@@ -15,10 +15,10 @@
 #' # login
 #' opals <- datashield.login(logins=logindata,assign=TRUE)
 #' 
-#' # Example 1: Get the levels of the PM_BMI_CONTINUOUS variable
-#' ji.ds.levels(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
+#' # Example 1: Get the levels of the PM_BMI_CATEGORICAL variable
+#' ji.ds.levels(datasources=opals, xvect=quote(D$PM_BMI_CATEGORICAL))
 #' 
-#' # Example 2: Get the levels of the LAB_TSC
+#' # Example 2: Get the levels of the LAB_TSC   SHOULD NOT WORK AS IT IS A CONTINUOUS VARIABLE
 #' ji.ds.levels(datasources=opals, xvect=quote(D$LAB_TSC))
 #' }
 #' 
@@ -36,12 +36,27 @@ ji.ds.levels = function(datasources=NULL, xvect=NULL) {
     stop(" End of process!\n\n", call.=FALSE)
   }
   
-  if(!is.factor(xvect)){
-    message("\n\n ALERT!\n")
-    message(" Please provide a valid factor vector of type factor\n")
-    stop(" End of process!\n\n", call.=FALSE)
+  # check whether a given vector is a factor type
+  numsources = length(datasources)
+  cally = call('class', xvect)
+  classes_xvect = datashield.aggregate(datasources, cally)
+  flag = 0
+  for (i in 1:numsources) {
+    if (classes_xvect[[i]]!='factor') {
+      message("\n\n ALERT!\n")
+      message(" Please provide a valid factor vector of type factor for study ", i, "\n")
+      flag=1
+    }
   }
+  if (flag==1)
+    stop(" End of process!\n\n", call.=FALSE)
   
+#   if(!is.factor(xvect)){
+#     message("\n\n ALERT!\n")
+#     message(" Please provide a valid factor vector of type factor\n")
+#     stop(" End of process!\n\n", call.=FALSE)
+#   }
+#   
   # call the function that checks the variable is available and not empty
   vars2check <- list(xvect)
   datasources <- ds.checkvar(datasources, vars2check)
