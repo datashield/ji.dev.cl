@@ -1,6 +1,7 @@
 export(ji.ds.asFactor)
 export(ji.ds.asList)
 export(ji.ds.asMatrix)
+export(ji.ds.asNull)
 export(ji.ds.c)
 export(ji.ds.class)
 export(ji.ds.colnames)
