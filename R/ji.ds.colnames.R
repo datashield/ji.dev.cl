@@ -41,7 +41,7 @@ ji.ds.colnames = function(datasources=NULL, x=NULL) {
   cally = call('class', x)
   classes_x = datashield.aggregate(datasources, cally)
   flag = 0  
-  for (i in 1:num.sources) {
+  for (i in 1:numsources) {
     if ( (classes_x[[i]]!='matrix') && (classes_x[[i]]!='data.frame') ){
       message("\n\n ALERT!\n")
       message(" Please provide a valid matrix-like object for study ",i, "\n")
