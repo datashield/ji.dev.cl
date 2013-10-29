@@ -36,7 +36,7 @@ ji.ds.colnames = function(datasources=NULL, x=NULL) {
     stop(" End of process!\n\n", call.=FALSE)
   }
   
-  # check whether a given vector is a factor type
+  # check whether a given vector is a matrix like object
   numsources = length(datasources)
   cally = call('class', x)
   classes_x = datashield.aggregate(datasources, cally)
