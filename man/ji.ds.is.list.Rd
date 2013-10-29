@@ -33,6 +33,6 @@ ji.ds.is.list(datasources=opals, x=quote(D))
 }
 }
 \author{
-  Isaeva, J. (julia.isaeva
+  Gaye, A. (amadou.gaye
 }
 

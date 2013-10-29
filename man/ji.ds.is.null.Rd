@@ -33,6 +33,6 @@ ji.ds.is.null(datasources=opals, xvect=quote(D$LAB_TSC))
 }
 }
 \author{
-  Isaeva, J. (julia.isaeva
+  Gaye, A. (amadou.gaye
 }
 
