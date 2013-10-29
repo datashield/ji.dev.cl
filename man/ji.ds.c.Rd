@@ -33,6 +33,10 @@ opals <- datashield.login(logins=logindata,assign=TRUE)
 c_input = list(quote(D$LAB_TSC), quote(D$LAB_TRIG))
 ji.ds.c(datasources=opals, xlist=c_input, newobj="LAB_TSC_TRIG")
 
+# Coerce random numbers
+c_input = list(quote(1), quote(5), quote(10))
+ji.ds.c(datasources=opals, xlist=c_input, newobj="dummy")
+
 }
 }
 \author{

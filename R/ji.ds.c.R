@@ -17,7 +17,7 @@
 #' opals <- datashield.login(logins=logindata,assign=TRUE)
 #' 
 #' # Coerce LAB_TSC and LAB_TRIG variables  SILLY EXAMPLE
-#' c_input = list(quote(D$LAB_TSC), quote(D$LAB_TRIG))
+#' c_input = c(quote(D$LAB_TSC), quote(D$LAB_TRIG))
 #' ji.ds.c(datasources=opals, xlist=c_input, newobj="LAB_TSC_TRIG")
 #' 
 #' # Coerce random numbers
@@ -46,6 +46,7 @@ ji.ds.c = function(datasources=NULL, xlist=NULL, newobj=NULL){
   datasources <- ds.checkvar(datasources, vars2check)
   
   # call the server side function that does the job
+  xlist = unlist(xlist)
   cally <- call('c', xlist )
   datashield.assign(datasources, newobj, cally)
   
