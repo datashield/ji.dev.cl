@@ -30,3 +30,5 @@ Collate:
     'ji.ds.c.R'
     'ji.ds.exp.R'
     'ji.ds.asList.R'
+    'ji.ds.log.R'
+    'ji.ds.asMatrix.R'
