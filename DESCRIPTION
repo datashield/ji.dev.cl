@@ -28,3 +28,4 @@ Collate:
     'ji.ds.is.list.R'
     'ji.ds.asFactor.R'
     'ji.ds.c.R'
+    'ji.ds.exp.R'
