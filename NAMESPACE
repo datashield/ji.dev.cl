@@ -1,4 +1,5 @@
 export(ji.ds.asFactor)
+export(ji.ds.c)
 export(ji.ds.class)
 export(ji.ds.colnames)
 export(ji.ds.contourplot)

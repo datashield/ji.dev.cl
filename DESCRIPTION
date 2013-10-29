@@ -27,3 +27,4 @@ Collate:
     'ji.ds.levels.R'
     'ji.ds.is.list.R'
     'ji.ds.asFactor.R'
+    'ji.ds.c.R'
