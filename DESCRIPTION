@@ -33,3 +33,4 @@ Collate:
     'ji.ds.log.R'
     'ji.ds.asMatrix.R'
     'ji.ds.asNull.R'
+    'ji.ds.complete.cases.R'
