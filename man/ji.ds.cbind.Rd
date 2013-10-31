@@ -14,8 +14,8 @@
   \item{vector}{a vector that holds the objects to combine}
 
   \item{newobj}{the name of the output object. If this
-  argument is set to NULL, the name of the new object is
-  'cbind_vect'.}
+  argument is set to \code{NULL}, the name of the new
+  object is 'cbind_vect'.}
 }
 \value{
   a message is displayed when the action is completed.

@@ -3,7 +3,7 @@
 #' @param datasources a list of opal object(s) obtained after login in to opal servers;
 #' these objects hold also the data assign to R, as \code{dataframe}, from opal datasources.
 #' @param vector a vector that holds the objects to combine
-#' @param newobj the name of the output object. If this argument is set to NULL, 
+#' @param newobj the name of the output object. If this argument is set to \code{NULL}, 
 #' the name of the new object is 'cbind_vect'.
 #' @return  a message is displayed when the action is completed.
 #' @author Gaye, A. (amadou.gaye@bristol.ac.uk) and Isaeva, J. (julia.isaeva@fhi.no)
