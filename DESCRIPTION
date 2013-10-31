@@ -35,3 +35,4 @@ Collate:
     'ji.ds.complete.cases.R'
     'ji.ds.isNA.R'
     'ji.ds.cbind.R'
+    'ji.ds.sum.R'
