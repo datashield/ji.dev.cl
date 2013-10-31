@@ -42,8 +42,8 @@ ji.ds.asList = function(datasources=NULL, x=NULL, newobj=NULL){
   # 'loose' objects stored in the server like variables not attached to a dataframe then we 
   # check if the variable is present in the servers
   flag <- c()
-  for(q in 1:length(xvect)){
-    obj <- xvect[[q]]
+  for(q in 1:length(x)){
+    obj <- x[[q]]
     inputterms <- unlist(strsplit(deparse(obj), "\\$", perl=TRUE))
     
     if(length(inputterms) > 1){
