@@ -15,8 +15,8 @@
   (numeric, complex og logical objects)}
 
   \item{newobj}{the name of the output object. If this
-  argument is set to NULL, the name of the new object is
-  'sum_vect'.}
+  argument is set to \code{NULL}, the name of the new
+  object is 'sum_vect'.}
 }
 \value{
   a message is displayed when the action is completed.
@@ -37,7 +37,7 @@ opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
 
 # compute the product of 'LAB_TSC' by 'LAB_HDL' and assign it to 'P'
 myvect <- quote(sum(D$LAB_TSC, D$LAB_HDL, na.rm=T))
-ji.ds.cbind(datasources=opals, vector=myvect)
+ji.ds.sum(datasources=opals, vector=myvect)
 }
 }
 \author{
