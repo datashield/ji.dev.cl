@@ -27,7 +27,6 @@ Collate:
     'ji.ds.levels.R'
     'ji.ds.is.list.R'
     'ji.ds.asFactor.R'
-    'ji.ds.c.R'
     'ji.ds.exp.R'
     'ji.ds.asList.R'
     'ji.ds.log.R'
@@ -35,3 +34,4 @@ Collate:
     'ji.ds.asNull.R'
     'ji.ds.complete.cases.R'
     'ji.ds.isNA.R'
+    'ji.ds.cbind.R'
