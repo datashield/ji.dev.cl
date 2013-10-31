@@ -30,7 +30,7 @@ data(logindata)
 opals <- datashield.login(logins=logindata,assign=TRUE)
 
 # Coerce LAB_TSC and LAB_TRIG variables  SILLY EXAMPLE
-c_input = list(quote(D$LAB_TSC), quote(D$LAB_TRIG))
+c_input = c(quote(D$LAB_TSC), quote(D$LAB_TRIG))
 ji.ds.c(datasources=opals, xlist=c_input, newobj="LAB_TSC_TRIG")
 
 # Coerce random numbers
