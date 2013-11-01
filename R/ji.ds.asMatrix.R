@@ -4,7 +4,7 @@
 #' @param datasources a list of opal object(s) obtained after login in to opal servers;
 #' these objects hold also the data assign to R, as \code{dataframe}, from opal datasources.
 #' @param x an object to be converted into a matrix
-#' @param newobj the name of the new vector.If this argument is set to NULL, the name of the new 
+#' @param newobj the name of the new vector.If this argument is set to \code{NULL}, the name of the new 
 #' variable is the name of the input variable with the suffixe '_matrix' (e.g. 'D_matrix', if input 
 #' variable's name is 'D')
 #' @return a message is displayed when the action is completed.
@@ -37,44 +37,44 @@ ji.ds.asMatrix = function(datasources=NULL, x=NULL, newobj=NULL){
     stop(" End of process!\n", call.=FALSE)
   }
   
-  # call the function that checks that the object are defined.
-  # If the objects are within a dataframe we check if the dataframe exists and if they are
-  # 'loose' objects stored in the server like variables not attached to a dataframe then we 
-  # check if the variable is present in the servers
-  flag <- c()
-  for(q in 1:length(xvect)){
-    obj <- xvect[[q]]
-    inputterms <- unlist(strsplit(deparse(obj), "\\$", perl=TRUE))
-    
-    if(length(inputterms) > 1){
-      dframe <-  unlist(strsplit(deparse(obj), "\\$", perl=TRUE))[[1]][1]
-      for(i in 1:length(datasources)){
-        out <- c()
-        cally <- call('exists', dframe )
-        qc <- datashield.aggregate(datasources[i], cally)
-        out <- append(out, qc[[1]])
-        xx <- which(out == FALSE)
-        if(length(xx) > 0){
-          warning("The table, '", dframe, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
-          flag <- append(flag, i)
-        }
-      }
-    }else{
-      objname <-  deparse(obj)
-      for(i in 1:length(datasources)){
-        out <- c()
-        cally <- call('exists', objname)
-        qc <- datashield.aggregate(datasources[i], cally)
-        out <- append(out, qc[[1]])
-        xx <- which(out == FALSE)
-        if(length(xx) > 0){
-          warning("The object, '", objname, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
-          flag <- append(flag, i)
-        }
-      }
-      
-    }
-  }
+#   # call the function that checks that the object are defined.
+#   # If the objects are within a dataframe we check if the dataframe exists and if they are
+#   # 'loose' objects stored in the server like variables not attached to a dataframe then we 
+#   # check if the variable is present in the servers
+#   flag <- c()
+#   for(q in 1:length(xvect)){
+#     obj <- xvect[[q]]
+#     inputterms <- unlist(strsplit(deparse(obj), "\\$", perl=TRUE))
+#     
+#     if(length(inputterms) > 1){
+#       dframe <-  unlist(strsplit(deparse(obj), "\\$", perl=TRUE))[[1]][1]
+#       for(i in 1:length(datasources)){
+#         out <- c()
+#         cally <- call('exists', dframe )
+#         qc <- datashield.aggregate(datasources[i], cally)
+#         out <- append(out, qc[[1]])
+#         xx <- which(out == FALSE)
+#         if(length(xx) > 0){
+#           warning("The table, '", dframe, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
+#           flag <- append(flag, i)
+#         }
+#       }
+#     }else{
+#       objname <-  deparse(obj)
+#       for(i in 1:length(datasources)){
+#         out <- c()
+#         cally <- call('exists', objname)
+#         qc <- datashield.aggregate(datasources[i], cally)
+#         out <- append(out, qc[[1]])
+#         xx <- which(out == FALSE)
+#         if(length(xx) > 0){
+#           warning("The object, '", objname, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
+#           flag <- append(flag, i)
+#         }
+#       }
+#       
+#     }
+#   }
   
   # the input variable might be given as column table (i.e. D$x)
   # or just as a vector not attached to a table (i.e. x)
