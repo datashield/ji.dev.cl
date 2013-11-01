@@ -49,6 +49,6 @@ ji.ds.NROW(datasources=opals, x=quote(D$LAB_TSC))
 }
 }
 \author{
-  Isaeva, J. (julia.isaeva
+  Gaye, A. (amadou.gaye
 }
 
