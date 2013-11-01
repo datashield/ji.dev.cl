@@ -37,67 +37,67 @@ ji.ds.list = function(datasources=NULL, vector=NULL, newobj=NULL){
     stop(" End of process!\n", call.=FALSE)
   }
   
-  # call the function that checks that the object are defined.
-  # If the objects are within a dataframe we check if the dataframe exists and if they are
-  # 'loose' objects stored in the server like variables not attached to a dataframe then we 
-  # check if the variable is present in the servers
-  flag <- c()
-  for(q in 1:length(vector)){
-    obj <- vector[[q]]
-    inputterms <- unlist(strsplit(deparse(obj), "\\$", perl=TRUE))
-    
-    if(length(inputterms) > 1){
-      dframe <-  unlist(strsplit(deparse(obj), "\\$", perl=TRUE))[[1]][1]
-      for(i in 1:length(datasources)){
-        out <- c()
-        cally <- call('exists', dframe )
-        qc <- datashield.aggregate(datasources[i], cally)
-        out <- append(out, qc[[1]])
-        xx <- which(out == FALSE)
-        if(length(xx) > 0){
-          warning("The table, '", dframe, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
-          flag <- append(flag, i)
-        }
-      }
-    }else{
-      objname <-  deparse(obj)
-      for(i in 1:length(datasources)){
-        out <- c()
-        cally <- call('exists', objname)
-        qc <- datashield.aggregate(datasources[i], cally)
-        out <- append(out, qc[[1]])
-        xx <- which(out == FALSE)
-        if(length(xx) > 0){
-          warning("The object, '", objname, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
-          flag <- append(flag, i)
-        }
-      }
-      
-    }
-  }
+#   # call the function that checks that the object are defined.
+#   # If the objects are within a dataframe we check if the dataframe exists and if they are
+#   # 'loose' objects stored in the server like variables not attached to a dataframe then we 
+#   # check if the variable is present in the servers
+#   flag <- c()
+#   for(q in 1:length(vector)){
+#     obj <- vector[[q]]
+#     inputterms <- unlist(strsplit(deparse(obj), "\\$", perl=TRUE))
+#     
+#     if(length(inputterms) > 1){
+#       dframe <-  unlist(strsplit(deparse(obj), "\\$", perl=TRUE))[[1]][1]
+#       for(i in 1:length(datasources)){
+#         out <- c()
+#         cally <- call('exists', dframe )
+#         qc <- datashield.aggregate(datasources[i], cally)
+#         out <- append(out, qc[[1]])
+#         xx <- which(out == FALSE)
+#         if(length(xx) > 0){
+#           warning("The table, '", dframe, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
+#           flag <- append(flag, i)
+#         }
+#       }
+#     }else{
+#       objname <-  deparse(obj)
+#       for(i in 1:length(datasources)){
+#         out <- c()
+#         cally <- call('exists', objname)
+#         qc <- datashield.aggregate(datasources[i], cally)
+#         out <- append(out, qc[[1]])
+#         xx <- which(out == FALSE)
+#         if(length(xx) > 0){
+#           warning("The object, '", objname, "', is not defined in ", paste0(names(datasources), collapse=","), "!")
+#           flag <- append(flag, i)
+#         }
+#       }
+#       
+#     }
+#   }
   
   # create a name by default if user did not provide a name for the new variable
   if(is.null(newobj)){
     newobj <- "list_vect"
   }
   
-  # call the server side function that does the job: do nothing if none of studies passed the checks above;
-  # run the server side function only for the studies that passed the checks
-  if(length(flag) == length(datasources)){
-    stop("One or more of the objects to combine are not defined in any of the studies servers!")
-  }else{
-    
-    if(is.null(flag)){
-      # this will call the list function defined on the server side
+#   # call the server side function that does the job: do nothing if none of studies passed the checks above;
+#   # run the server side function only for the studies that passed the checks
+#   if(length(flag) == length(datasources)){
+#     stop("One or more of the objects to combine are not defined in any of the studies servers!")
+#   }else{
+#     
+#     if(is.null(flag)){
+#       # this will call the list function defined on the server side
       cally <- as.call(vector)
       datashield.assign(datasources, newobj, cally)
-    }else{
-      cally <- as.call(vector)
-      datasources <- datasources[-flag]
-      datashield.assign(datasources, newobj, cally)
-      message("The objects were combined only  for ", paste0(names(datasources), collapse=","), ".")
-    }
-  }
+#     }else{
+#       cally <- as.call(vector)
+#       datasources <- datasources[-flag]
+#       datashield.assign(datasources, newobj, cally)
+#       message("The objects were combined only  for ", paste0(names(datasources), collapse=","), ".")
+#     }
+#   }
   
   # a message so the user know the function was ran (assign function are 'silent')
   message("An 'assign' function was ran, no output should be expected on the client side!")
