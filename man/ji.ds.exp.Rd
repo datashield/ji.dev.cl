@@ -35,7 +35,7 @@ data(logindata)
 myvar <- list("PM_BMI_CONTINUOUS")
 opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
 
-# turn the factor variable 'GENDER' into a character vector
+# compute exponential function of the 'PM_BMI_CONTINUOUS' variable
 ji.ds.exp(datasources=opals, xvect=quote(D$PM_BMI_CONTINUOUS))
 }
 }
