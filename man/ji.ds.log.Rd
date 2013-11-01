@@ -41,8 +41,6 @@ ji.ds.log(datasources=opals, xvect=quote(D$LAB_TSC))
 # Compute natural logarithm of LAB_TSC with base 2
 ji.ds.log(datasources=opals, xvect=quote(D$LAB_TSC), base=2)
 
-# Compute natural logarithm of D
-ji.ds.log(datasources=opals, xvect=quote(D))
 }
 }
 \author{
