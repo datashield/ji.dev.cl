@@ -35,7 +35,7 @@ data(logindata)
 myvar <- list("LAB_TSC","LAB_HDL")
 opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
 
-# compute the product of 'LAB_TSC' by 'LAB_HDL' and assign it to 'P'
+# compute the sum of 'LAB_TSC' and 'LAB_HDL' (removing missing values if exist)
 myvect <- quote(sum(D$LAB_TSC, D$LAB_HDL, na.rm=T))
 ji.ds.sum(datasources=opals, vector=myvect)
 }
