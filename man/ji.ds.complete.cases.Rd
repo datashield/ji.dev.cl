@@ -36,7 +36,7 @@ data(logindata)
 # login and assign specific variable(s)
 opals <- datashield.login(logins=logindata,assign=TRUE)
 
-# Create a vector with indices for complete observations
+# Create a vector with indices for complete observations (rows)
 ji.ds.complete.cases(datasources=opals, x=quote(D))
 
 # Create a vector with indices for complete observations for LAB_TSC and PM_BMI_CONTINUOUS variables
