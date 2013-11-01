@@ -14,10 +14,10 @@
   \item{xvect}{a vector.}
 
   \item{newobj}{the name of the new vector.If this argument
-  is set to NULL, the name of the new variable is the name
-  of the input variable with the suffixe '_exp' (e.g.
-  'PM_BMI_CONTINUOUS_exp', if input variable's name is
-  'PM_BMI_CONTINUOUS')}
+  is set to \code{NULL}, the name of the new variable is
+  the name of the input variable with the suffixe '_exp'
+  (e.g. 'PM_BMI_CONTINUOUS_exp', if input variable's name
+  is 'PM_BMI_CONTINUOUS')}
 }
 \value{
   a message is displayed when the action is completed.
