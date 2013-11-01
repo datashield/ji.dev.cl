@@ -37,3 +37,4 @@ Collate:
     'ji.ds.cbind.R'
     'ji.ds.sum.R'
     'ji.ds.list.R'
+    'ji.ds.data.frame.R'
