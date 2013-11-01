@@ -14,9 +14,9 @@
   \item{x}{an object to be converted into a matrix}
 
   \item{newobj}{the name of the new vector.If this argument
-  is set to NULL, the name of the new variable is the name
-  of the input variable with the suffixe '_matrix' (e.g.
-  'D_matrix', if input variable's name is 'D')}
+  is set to \code{NULL}, the name of the new variable is
+  the name of the input variable with the suffixe '_matrix'
+  (e.g. 'D_matrix', if input variable's name is 'D')}
 }
 \value{
   a message is displayed when the action is completed.
