@@ -74,7 +74,7 @@ ji.ds.asList = function(datasources=NULL, x=NULL, newobj=NULL){
 #       }
 #       
 #     }
-  }
+#  }
   
   # the input variable might be given as column table (i.e. D$x)
   # or just as a vector not attached to a table (i.e. x)
