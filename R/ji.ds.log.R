@@ -23,9 +23,10 @@
 #' ji.ds.log(datasources=opals, xvect=quote(D$LAB_TSC))
 #' 
 #' # Compute natural logarithm of LAB_TSC with base 2
-#' myvect = quote(D$LAB_TSC, base=2)
-#' ji.ds.log(datasources=opals, xvect=myvect)
+#' ji.ds.log(datasources=opals, xvect=quote(D$LAB_TSC), base=2)
 #' 
+#' # Compute natural logarithm of D
+#' ji.ds.log(datasources=opals, xvect=quote(D))
 #' }
 #' 
 ji.ds.log = function(datasources=NULL, xvect=NULL, base=exp(1), newobj=NULL){
@@ -63,7 +64,7 @@ ji.ds.log = function(datasources=NULL, xvect=NULL, base=exp(1), newobj=NULL){
   }
   
   # call the server side function that does the job
-  cally <- call('log', xvect )
+  cally <- call('log', xvect, base )
   datashield.assign(datasources, newobj, cally)
   
   # a message so the user know the function was run (assign function are 'silent')
