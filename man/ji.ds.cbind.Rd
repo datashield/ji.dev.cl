@@ -33,7 +33,7 @@ data(logindata)
 myvar <- list("LAB_TSC","LAB_HDL")
 opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
 
-# compute the product of 'LAB_TSC' by 'LAB_HDL' and assign it to 'P'
+# combine the 'LAB_TSC' and 'LAB_HDL' variables by columns
 myvect <- quote(cbind(D$LAB_TSC, D$LAB_HDL))
 ji.ds.cbind(datasources=opals, vector=myvect)
 }
