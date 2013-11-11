@@ -135,7 +135,7 @@ ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="co
     if (show=='all') {
       # plot a combined heatmap
       image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
-    } else if (show='zoomed') {
+    } else if (show=='zoomed') {
       
       # find rows and columns on the edge of the grid density object which consist only of zeros and leave only
       # one such row/column on each side
@@ -221,7 +221,7 @@ ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="co
         title <- paste("Heatmap Plot of ", stdnames[i], sep="")
         if (show=='all') {
           image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)
-        } else if (show='zoomed') {
+        } else if (show=='zoomed') {
           
           # find rows and columns on the edge of the grid density object which consist only of zeros and leave only
           # one such row/column on each side
@@ -291,7 +291,7 @@ ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="co
       title <- paste("Heatmap Plot of ", stdnames[1], sep="")
       if (show=='all') {
         image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)
-      } else if (show='zoomed') {
+      } else if (show=='zoomed') {
         
         # find rows and columns on the edge of the grid density object which consist only of zeros and leave only
         # one such row/column on each side
