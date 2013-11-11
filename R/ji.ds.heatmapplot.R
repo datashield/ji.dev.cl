@@ -188,9 +188,11 @@ ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="co
       } else dummy_right = col_right+1  # leave one column on the right with only zeros
       
       z.zoomed = Global.grid.density[dummy_top:dummy_bot, dummy_left:dummy_right]
+      x.zoomed = x[dummy_top:dummy_bot]
+      y.zoomed = y[dummy_left:dummy_right]
       
       # plot a combined heatmap
-      image.plot(x,y,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+      image.plot(x.zoomed,y.zoomed,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
     } else
       stop('Function argument "show" has to be either "all" or "zoomed"')
     
@@ -274,9 +276,12 @@ ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="co
           } else dummy_right = col_right+1  # leave one column on the right with only zeros
           
           z.zoomed = z[dummy_top:dummy_bot, dummy_left:dummy_right]
+          x.zoomed = x[dummy_top:dummy_bot]
+          y.zoomed = y[dummy_left:dummy_right]
+          
           
           # plot a combined heatmap
-          image.plot(x,y,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+          image.plot(x.zoomed,y.zoomed,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
           
         } else
           stop('Function argument "show" has to be either "all" or "zoomed"')
@@ -344,9 +349,12 @@ ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="co
         } else dummy_right = col_right+1  # leave one column on the right with only zeros
         
         z.zoomed = z[dummy_top:dummy_bot, dummy_left:dummy_right]
+        x.zoomed = x[dummy_top:dummy_bot]
+        y.zoomed = y[dummy_left:dummy_right]
+        
         
         # plot a combined heatmap
-        image.plot(x,y,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+        image.plot(x.zoomed,y.zoomed,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
         
       } else
         stop('Function argument "show" has to be either "all" or "zoomed"')
