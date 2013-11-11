@@ -1,63 +1,124 @@
 #' 
 #' @title Generates a heatmap plot for merged datasets
-#' @param opals character strings that represent the URL of the servers where 
-#' the study datasets are stored.
+#' @param datasources a list of opal object(s) obtained after login in to opal servers;
+#' these objects hold also the data assign to R, as \code{dataframe}, from opal datasources. 
 #' @param xvect a numerical vector
 #' @param yvect a numerical vector
 #' @param type a character which represents the type of graph to display. 
 #' If \code{type} is set to 'combine', a combined heatmap plot displayed and 
 #' if \code{type} is set to 'split', each heatmap is plotted separately.
+#' @param show a character which represents where the plot should focus
+#' If \code{show} is set to 'all', the ranges of the variables are used as plot limits
+#' If \code{show} is set to 'zoomed', the plot is zoomed to the region where the actual data are
 #' @param numints a number of intervals for a density grid object
 #' @return a heatmap plot
 #' @author Isaeva, J. and Gaye, A.
 #' @export
+#' @examples {
+#' # load the file that contains the login details
+#' data(logindata)
 #' 
-ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
+#' # login and assign the required variables to R
+#' myvar <- list("LAB_TSC","LAB_HDL")
+#' opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
+#' 
+#' # Example1: generate a combined heatmapplot
+#' ji.ds.heatmapplot(datasources=opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="combine")
+#' 
+#' # Example2: generate a heatmapplot where each study is plotted seaparately
+#' ji.ds.heatmapplot(datasources=opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="split")
+#' 
+#' # Example3: generate a heatmapplot with a less dense drid
+#' ji.ds.heatmapplot(datasources=opals, quote(D$LAB_TSC), quote(D$LAB_HDL), type="split", numints=15)
+#' }
+#'
+ji.ds.heatmapplot <- function(datasources=NULL, xvect=NULL, yvect=NULL, type="combine", show="all", numints=20)
 {
+  if(is.null(datasources)){
+    cat("\n\n ALERT!\n")
+    cat(" No valid opal object(s) provided.\n")
+    cat(" Make sure you are logged in to valid opal server(s).\n")
+    stop(" End of process!\n\n", call.=FALSE)
+  }
+  
+  if(is.null(xvect)){
+    cat("\n\n ALERT!\n")
+    cat(" Please provide a valid numeric vector for 'xvect'\n")
+    stop(" End of process!\n\n", call.=FALSE)
+  }
+  
+  if(is.null(yvect)){
+    cat("\n\n ALERT!\n")
+    cat(" Please provide a valid numeric vector for 'yvec'\n")
+    stop(" End of process!\n\n", call.=FALSE)
+  }
   
   # labels for the x and y-axis 
-  x.lab <- strsplit(deparse(xvect), "\\$", perl=TRUE)[[1]][2]
-  y.lab <- strsplit(deparse(yvect), "\\$", perl=TRUE)[[1]][2]
+  # the input variable might be given as column table (i.e. D$xvect)
+  # or just as a vector not attached to a table (i.e. xvect)
+  # we have to make sure the function deals with each case
+  inputterms <- unlist(strsplit(deparse(xvect), "\\$", perl=TRUE))
+  if(length(inputterms) > 1){
+    x.lab <- strsplit(deparse(xvect), "\\$", perl=TRUE)[[1]][2]
+  }else{
+    x.lab <- deparse(xvect)
+  }
+  inputterms <- unlist(strsplit(deparse(yvect), "\\$", perl=TRUE))
+  if(length(inputterms) > 1){
+    y.lab <- strsplit(deparse(yvect), "\\$", perl=TRUE)[[1]][2]
+  }else{
+    y.lab <- deparse(yvect)
+  }
+  
+  # call the function that checks the variable is available and not empty
+  vars2check <- list(xvect,yvect)
+  datasources <- ds.checkvar(datasources, vars2check)
   
   # name of the studies to be used in the plots' titles
-  stdnames <- names(opals)
+  stdnames <- names(datasources)
   
-  num.sources <- length(opals)
-  
-  # define the min and max of the variables among all the datasets
-  cally <- call("ji.MinMax.ds", xvect, yvect) 
-  MinMax.obj <- datashield.aggregate(opals, cally)
-  
-  x.global.min = NULL
-  x.global.max = NULL
-  y.global.min = NULL
-  y.global.max = NULL
-  
-  for (i in 1:num.sources) {
-    x.global.min = c(x.global.min, MinMax.obj[[i]][1,1])
-    x.global.max = c(x.global.max, MinMax.obj[[i]][2,1])
-    y.global.min = c(y.global.min, MinMax.obj[[i]][1,2])
-    y.global.max = c(y.global.max, MinMax.obj[[i]][2,2])
-  }
-  
-  x.global.min = min(x.global.min)
-  x.global.max = max(x.global.max)
-  y.global.min = min(y.global.min)
-  y.global.max = max(y.global.max)
-  
-  # generate the grid density object to plot
-  cally <- call("ji.densitygrid.ds", xvect, yvect, limits=T, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
-  grid.density.obj <- datashield.aggregate(opals, cally)
-  
-  numcol<-dim(grid.density.obj[[1]])[2]
-  
-  # print the number of invalid cells in each participating study
-  for (i in 1:num.sources) {
-    cat('\n',stdnames[i],': ', names(dimnames(grid.density.obj[[i]])[2]), '\n')
-  }
+  # number of studies
+  num.sources <- length(datasources)
   
   
   if(type=="combine"){
+    
+    # get the range from each study and produce the 'global' range
+    cally <- call("range.ds", xvect) 
+    x.ranges <- datashield.aggregate(datasources, cally)
+    
+    cally <- call("range.ds", yvect) 
+    y.ranges <- datashield.aggregate(datasources, cally)
+    
+    x.minrs <- c()
+    x.maxrs <- c()
+    y.minrs <- c()
+    y.maxrs <- c()
+    for(i in 1:num.sources){
+      x.minrs <- append(x.minrs, x.ranges[[i]][1])
+      x.maxrs <- append(x.maxrs, x.ranges[[i]][2])
+      y.minrs <- append(y.minrs, y.ranges[[i]][1])
+      y.maxrs <- append(y.maxrs, y.ranges[[i]][2])
+    }
+    x.range.arg <- c(min(x.minrs), max(x.maxrs))
+    y.range.arg <- c(min(y.minrs), max(y.maxrs))
+    
+    x.global.min = x.range.arg[1]
+    x.global.max = x.range.arg[2]
+    y.global.min = y.range.arg[1]
+    y.global.max = y.range.arg[2]
+    
+    
+    # generate the grid density object to plot
+    cally <- call("densitygrid.ds", xvect, yvect, limits=T, x.global.min, x.global.max, y.global.min, y.global.max, numints) 
+    grid.density.obj <- datashield.aggregate(datasources, cally)
+    
+    numcol<-dim(grid.density.obj[[1]])[2]
+    
+    # print the number of invalid cells in each participating study
+    for (i in 1:num.sources) {
+      cat('\n',stdnames[i],': ', names(dimnames(grid.density.obj[[i]])[2]), '\n')
+    }
     
     Global.grid.density = matrix(0, dim(grid.density.obj[[1]])[1], numcol-2)
     for (i in 1:num.sources){
@@ -71,23 +132,83 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
     y<-grid.density.obj[[1]][,(numcol)]
     z<-Global.grid.density
     
-    # plot a combined heatmap
-    image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+    if (show=='all') {
+      # plot a combined heatmap
+      image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+    } else if (show='zoomed') {
+      
+      # find rows and columns on the edge of the grid density object which consist only of zeros and leave only
+      # one such row/column on each side
+      # rows on the top
+      flag = 0
+      rows_top = 1
+      while (flag !=1) {   # find out where non-zero elements start
+        if (all(Global.grid.density[rows_top,]==0)) {
+          rows_top = rows_top+1 
+         } else flag=1
+      }
+      if (rows_top==1) {  # the first row contains non-zero elements
+        dummy_top = rows_top
+      } else dummy_top = rows_top-1  # leave one row at the top with only zeros
+      
+      # rows at the bottom
+      flag = 0
+      rows_bot = dim(Global.grid.density)[1]
+      while (flag !=1) {   # find out where non-zero elements start
+        if (all(Global.grid.density[rows_bot,]==0)) {
+          rows_bot = rows_bot-1 
+        } else flag=1
+      }
+      if (rows_bot==dim(Global.grid.density)[1]) {  # the last row contains non-zero elements
+        dummy_bot = rows_bot
+      } else dummy_bot = rows_bot+1  # leave one row at the bottom with only zeros
+      
+      # columns on the left
+      flag = 0
+      col_left = 1
+      while (flag !=1) {   # find out where non-zero elements start
+        if (all(Global.grid.density[,col_left]==0)) {
+          col_left = col_left+1 
+        } else flag=1
+      }
+      if (col_left==1) {  # the first column contains non-zero elements
+        dummy_left = col_left
+      } else dummy_left = col_left-1  # leave one column on the left with only zeros
+      
+      # columns on the right
+      flag = 0
+      col_right = dim(Global.grid.density)[2]
+      while (flag !=1) {   # find out where non-zero elements start
+        if (all(Global.grid.density[,col_right]==0)) {
+          col_right = col_right-1 
+        } else flag=1
+      }
+      if (col_right==1) {  # the first column contains non-zero elements
+        dummy_right = dim(Global.grid.density)[2]
+      } else dummy_right = col_right+1  # leave one column on the right with only zeros
+      
+      z.zoomed = Global.grid.density[dummy_top:dummy_bot, dummy_left:dummy_right]
+      
+      # plot a combined heatmap
+      image.plot(x,y,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+    } else
+      stop('Function argument "show" has to be either "all" or "zoomed"')
     
   } else if (type=='split') {
     
-    # define scale for plot legends
-    z.min = NULL
-    z.max = NULL
+    # generate the grid density object to plot
+    num_intervals=numints
+    cally <- call("densitygrid.ds", xvect, yvect, limits=FALSE, x.min=NULL, x.max=NULL, y.min=NULL, y.max=NULL, numints=num_intervals) 
+    grid.density.obj <- datashield.aggregate(datasources, cally)
     
+    numcol<-dim(grid.density.obj[[1]])[2]
+    
+    # print the number of invalid cells in each participating study
     for (i in 1:num.sources) {
-      z.min = c(z.min, min(grid.density.obj[[i]][,1:(numcol-2)]))
-      z.max = c(z.max, max(grid.density.obj[[i]][,1:(numcol-2)]))
+      cat('\n',stdnames[i],': ', names(dimnames(grid.density.obj[[i]])[2]), '\n')
     }
     
-    z.global.min = min(z.min)
-    z.global.max = max(z.max)
-
+    
     if(num.sources > 1){
       if((num.sources %% 2) == 0){ numr <- num.sources/2 }else{ numr <- (num.sources+1)/2}
       numc <- 2
@@ -98,17 +219,140 @@ ji.ds.heatmapplot <- function(opals, xvect, yvect, type="combine", numints=20)
         y<-grid.density.obj[[i]][,(numcol)]
         z<-grid 
         title <- paste("Heatmap Plot of ", stdnames[i], sep="")
-        image.plot(x,y,z, xlab=x.lab, ylab=y.lab, zlim=c(z.global.min,z.global.max), main=title)
+        if (show=='all') {
+          image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)
+        } else if (show='zoomed') {
+          
+          # find rows and columns on the edge of the grid density object which consist only of zeros and leave only
+          # one such row/column on each side
+          # rows on the top
+          flag = 0
+          rows_top = 1
+          while (flag !=1) {   # find out where non-zero elements start
+            if (all(z[rows_top,]==0)) {
+              rows_top = rows_top+1 
+            } else flag=1
+          }
+          if (rows_top==1) {  # the first row contains non-zero elements
+            dummy_top = rows_top
+          } else dummy_top = rows_top-1  # leave one row at the top with only zeros
+          
+          # rows at the bottom
+          flag = 0
+          rows_bot = dim(z)[1]
+          while (flag !=1) {   # find out where non-zero elements start
+            if (all(z[rows_bot,]==0)) {
+              rows_bot = rows_bot-1 
+            } else flag=1
+          }
+          if (rows_bot==dim(z)[1]) {  # the last row contains non-zero elements
+            dummy_bot = rows_bot
+          } else dummy_bot = rows_bot+1  # leave one row at the bottom with only zeros
+          
+          # columns on the left
+          flag = 0
+          col_left = 1
+          while (flag !=1) {   # find out where non-zero elements start
+            if (all(z[,col_left]==0)) {
+              col_left = col_left+1 
+            } else flag=1
+          }
+          if (col_left==1) {  # the first column contains non-zero elements
+            dummy_left = col_left
+          } else dummy_left = col_left-1  # leave one column on the left with only zeros
+          
+          # columns on the right
+          flag = 0
+          col_right = dim(z)[2]
+          while (flag !=1) {   # find out where non-zero elements start
+            if (all(z[,col_right]==0)) {
+              col_right = col_right-1 
+            } else flag=1
+          }
+          if (col_right==1) {  # the first column contains non-zero elements
+            dummy_right = dim(z)[2]
+          } else dummy_right = col_right+1  # leave one column on the right with only zeros
+          
+          z.zoomed = z[dummy_top:dummy_bot, dummy_left:dummy_right]
+          
+          # plot a combined heatmap
+          image.plot(x,y,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+          
+        } else
+          stop('Function argument "show" has to be either "all" or "zoomed"')
       }
-   }else{
+      
+    }else{
       par(mfrow=c(1,1)) 
       grid <- grid.density.obj[[1]][,1:(numcol-2)]
       x <- grid.density.obj[[1]][,(numcol-1)]
       y <- grid.density.obj[[1]][,(numcol)]
       z <- grid  
       title <- paste("Heatmap Plot of ", stdnames[1], sep="")
-      image.plot(x,y,z, xlab=x.lab, ylab=y.lab, zlim=c(z.global.min,z.global.max), main=title)   
-    }    
+      if (show=='all') {
+        image.plot(x,y,z, xlab=x.lab, ylab=y.lab, main=title)
+      } else if (show='zoomed') {
+        
+        # find rows and columns on the edge of the grid density object which consist only of zeros and leave only
+        # one such row/column on each side
+        # rows on the top
+        flag = 0
+        rows_top = 1
+        while (flag !=1) {   # find out where non-zero elements start
+          if (all(z[rows_top,]==0)) {
+            rows_top = rows_top+1 
+          } else flag=1
+        }
+        if (rows_top==1) {  # the first row contains non-zero elements
+          dummy_top = rows_top
+        } else dummy_top = rows_top-1  # leave one row at the top with only zeros
+        
+        # rows at the bottom
+        flag = 0
+        rows_bot = dim(z)[1]
+        while (flag !=1) {   # find out where non-zero elements start
+          if (all(z[rows_bot,]==0)) {
+            rows_bot = rows_bot-1 
+          } else flag=1
+        }
+        if (rows_bot==dim(z)[1]) {  # the last row contains non-zero elements
+          dummy_bot = rows_bot
+        } else dummy_bot = rows_bot+1  # leave one row at the bottom with only zeros
+        
+        # columns on the left
+        flag = 0
+        col_left = 1
+        while (flag !=1) {   # find out where non-zero elements start
+          if (all(z[,col_left]==0)) {
+            col_left = col_left+1 
+          } else flag=1
+        }
+        if (col_left==1) {  # the first column contains non-zero elements
+          dummy_left = col_left
+        } else dummy_left = col_left-1  # leave one column on the left with only zeros
+        
+        # columns on the right
+        flag = 0
+        col_right = dim(z)[2]
+        while (flag !=1) {   # find out where non-zero elements start
+          if (all(z[,col_right]==0)) {
+            col_right = col_right-1 
+          } else flag=1
+        }
+        if (col_right==1) {  # the first column contains non-zero elements
+          dummy_right = dim(z)[2]
+        } else dummy_right = col_right+1  # leave one column on the right with only zeros
+        
+        z.zoomed = z[dummy_top:dummy_bot, dummy_left:dummy_right]
+        
+        # plot a combined heatmap
+        image.plot(x,y,z.zoomed, xlab=x.lab, ylab=y.lab, main="Heatmap Plot of the Pooled Data")
+        
+      } else
+        stop('Function argument "show" has to be either "all" or "zoomed"')
+      
+    }
+    
   } else
-      stop('Function argument "type" has to be either "combine" or "split"')
+    stop('Function argument "type" has to be either "combine" or "split"')
 }
