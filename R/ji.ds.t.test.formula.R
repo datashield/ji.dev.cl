@@ -1,5 +1,5 @@
 #' 
-#' @title Runs a student's t-test on horizontally partitioned data (formula method)
+#' @title Runs a student's t-test on horizontally partitioned data (formula method) NOT WORKING YET!!!!!!!!!!!
 #' @description Performs two sample t-tests on vectors of data.
 #' @param opals a list of opal object(s) obtained after login in to opal servers;
 #' these objects hold also the data assign to R, as \code{dataframe}, from opal 
@@ -41,13 +41,13 @@
 #' 
 #' # login and assign specific variable(s)
 #' myvar <- list("LAB_TSC", "GENDER")
-#' opals <- ds.login(logins=logindata,assign=TRUE,variables=myvar)
+#' opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
 #' 
 #' # Example 1: Run a t.test of the pooled data for the variables 'LAB_HDL' and 'LAB_TSC' - default
-#' ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
+#' ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER)
 #' 
 #' # Example 2: Run a t.test for each study separately for the same variables as above
-#' ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
+#' ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
 #'}
 #'
 ji.ds.t.test.formula <- function (opals, formula, data=NULL, subset=NULL, na.action=getOption('na.action'), type="combine", alternative = "two.sided", mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95) {
@@ -75,9 +75,28 @@ ji.ds.t.test.formula <- function (opals, formula, data=NULL, subset=NULL, na.act
     
     # Match given values and variables of the function
     m <- match.call(expand.dots = FALSE)
-    return(m)
-    
-    
+    print(m)
+#     if (is.matrix(eval(m$data, parent.frame()))) 
+#       m$data <- as.data.frame(data)
+#     
+#     if (is.matrix(eval(m$data, parent.frame()))) 
+#       m$data <- as.data.frame(data)
+#     m[[1L]] <- as.name("model.frame")
+#     m$... <- NULL
+#     mf <- eval(m, parent.frame())
+#     DNAME <- paste(names(mf), collapse = " by ")
+#     names(mf) <- NULL
+#     response <- attr(attr(mf, "terms"), "response")
+#     g <- factor(mf[[-response]])
+#     if (nlevels(g) != 2L) 
+#       stop("grouping factor must have exactly 2 levels")
+#     DATA <- split(mf[[response]], g)
+#     names(DATA) <- c("x", "y")
+#     y <- do.call("t.test", c(DATA, list(...)))
+#     y$data.name <- DNAME
+#     if (length(y$estimate) == 2L) 
+#       names(y$estimate) <- paste("mean in group", levels(g))
+#     y
     
 #     # Performs t-test on merged data sets
 #     if (!missing(mu) && (length(mu) != 1 || is.na(mu))) 

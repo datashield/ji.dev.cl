@@ -1,6 +1,6 @@
 \name{ji.ds.t.test.formula}
 \alias{ji.ds.t.test.formula}
-\title{Runs a student's t-test on horizontally partitioned data (formula method)}
+\title{Runs a student's t-test on horizontally partitioned data (formula method) NOT WORKING YET!!!!!!!!!!!}
 \usage{
   ji.ds.t.test.formula(opals, formula, data = NULL,
     subset = NULL, na.action = getOption("na.action"),
@@ -87,13 +87,13 @@ data(logindata)
 
 # login and assign specific variable(s)
 myvar <- list("LAB_TSC", "GENDER")
-opals <- ds.login(logins=logindata,assign=TRUE,variables=myvar)
+opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
 
 # Example 1: Run a t.test of the pooled data for the variables 'LAB_HDL' and 'LAB_TSC' - default
-ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
+ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER)
 
 # Example 2: Run a t.test for each study separately for the same variables as above
-ds.t.test(opals=opals, x=quote(D$LAB_HDL), y=quote(D$LAB_TSC), type="split")
+ji.ds.t.test.formula(opals=opals, formula=D$LAB_TSC~D$GENDER, type="split")
 }
 }
 \author{
